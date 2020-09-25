@@ -1,6 +1,9 @@
 {
   "version": "0.1.0",
   "license": "MIT",
+  "repository": {
+    "url": "https://github.com/iGLOO-be/nodemailer-mail-tracking.git"
+  },
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -29,7 +32,7 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "mail-track",
+  "name": "nodemailer-mail-tracking",
   "module": "dist/mail-track.esm.js",
   "devDependencies": {
     "@types/express": "^4.17.8",
