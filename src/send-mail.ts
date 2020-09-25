@@ -9,7 +9,7 @@ import { splitByRecipients } from './lib/split-recipients';
 import { addBlankImage, patchLinks } from './lib/patch-html';
 
 function isMailOptionsWithHtml(v: any): v is SendMailOptionsWithHtml {
-  return !v.html || typeof v.html !== 'string';
+  return v.html && typeof v.html === 'string';
 }
 
 export const sendMail = async (
@@ -18,11 +18,16 @@ export const sendMail = async (
   sendMailOptions: SendMailOptions
 ): Promise<SentMessageInfo[]> => {
   if (!isMailOptionsWithHtml(sendMailOptions)) {
-    return [transporter.sendMail(sendMailOptions)];
+    return [await transporter.sendMail(sendMailOptions)];
   }
 
   const sendOptions = splitByRecipients(sendMailOptions).map(o => {
-    const data = { recipient: o.envelope.from || '' };
+    const data = {
+      recipient:
+        (o.envelope.to &&
+          (Array.isArray(o.envelope.to) ? o.envelope.to[0] : o.envelope.to)) ||
+        '',
+    };
     const tokenData = {
       ...options.getData(data),
       ...data,
@@ -33,7 +38,7 @@ export const sendMail = async (
     };
   });
 
-  return await Promise.all(sendOptions.map(o => transporter.sendMail(o)));
+  return Promise.all(sendOptions.map(o => transporter.sendMail(o)));
 };
 
 const patchHtmlBody = (
