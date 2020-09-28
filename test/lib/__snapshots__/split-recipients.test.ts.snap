@@ -1,0 +1,256 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`splitByRecipients works with 1 bcc 1`] = `
+Array [
+  Object {
+    "envelope": Object {
+      "from": "sender@email.com",
+      "to": "some@email.com",
+    },
+    "from": "sender@email.com",
+    "headers": Object {
+      "Bcc": "some@email.com",
+    },
+    "html": "Hey!",
+  },
+]
+`;
+
+exports[`splitByRecipients works with 1 cc 1`] = `
+Array [
+  Object {
+    "envelope": Object {
+      "from": "sender@email.com",
+      "to": "some@email.com",
+    },
+    "from": "sender@email.com",
+    "headers": Object {
+      "Cc": "some@email.com",
+    },
+    "html": "Hey!",
+  },
+]
+`;
+
+exports[`splitByRecipients works with 1 multiple bcc (with name) 1`] = `
+Array [
+  Object {
+    "envelope": Object {
+      "from": "sender@email.com",
+      "to": "Some Email <some@email.com>",
+    },
+    "from": "sender@email.com",
+    "headers": Object {
+      "Bcc": Array [
+        "Some Email <some@email.com>",
+      ],
+    },
+    "html": "Hey!",
+  },
+]
+`;
+
+exports[`splitByRecipients works with 1 multiple bcc 1`] = `
+Array [
+  Object {
+    "envelope": Object {
+      "from": "sender@email.com",
+      "to": "some@email.com",
+    },
+    "from": "sender@email.com",
+    "headers": Object {
+      "Bcc": Array [
+        "some@email.com",
+      ],
+    },
+    "html": "Hey!",
+  },
+]
+`;
+
+exports[`splitByRecipients works with 1 multiple cc (with name) 1`] = `
+Array [
+  Object {
+    "envelope": Object {
+      "from": "sender@email.com",
+      "to": "Some Email <some@email.com>",
+    },
+    "from": "sender@email.com",
+    "headers": Object {
+      "Cc": Array [
+        "Some Email <some@email.com>",
+      ],
+    },
+    "html": "Hey!",
+  },
+]
+`;
+
+exports[`splitByRecipients works with 1 multiple cc 1`] = `
+Array [
+  Object {
+    "envelope": Object {
+      "from": "sender@email.com",
+      "to": "some@email.com",
+    },
+    "from": "sender@email.com",
+    "headers": Object {
+      "Cc": Array [
+        "some@email.com",
+      ],
+    },
+    "html": "Hey!",
+  },
+]
+`;
+
+exports[`splitByRecipients works with 1 multiple to (with name) 1`] = `
+Array [
+  Object {
+    "envelope": Object {
+      "from": "sender@email.com",
+      "to": "Some Email <some@email.com>",
+    },
+    "from": "sender@email.com",
+    "headers": Object {
+      "To": Array [
+        "Some Email <some@email.com>",
+      ],
+    },
+    "html": "Hey!",
+  },
+]
+`;
+
+exports[`splitByRecipients works with 1 multiple to 1`] = `
+Array [
+  Object {
+    "envelope": Object {
+      "from": "sender@email.com",
+      "to": "some@email.com",
+    },
+    "from": "sender@email.com",
+    "headers": Object {
+      "To": Array [
+        "some@email.com",
+      ],
+    },
+    "html": "Hey!",
+  },
+]
+`;
+
+exports[`splitByRecipients works with 1 to 1`] = `
+Array [
+  Object {
+    "envelope": Object {
+      "from": "sender@email.com",
+      "to": "some@email.com",
+    },
+    "from": "sender@email.com",
+    "headers": Object {
+      "To": "some@email.com",
+    },
+    "html": "Hey!",
+  },
+]
+`;
+
+exports[`splitByRecipients works with multiple bcc 1`] = `
+Array [
+  Object {
+    "envelope": Object {
+      "from": "sender@email.com",
+      "to": "some@email.com",
+    },
+    "from": "sender@email.com",
+    "headers": Object {
+      "Bcc": Array [
+        "some@email.com",
+        "other@mail.com",
+      ],
+    },
+    "html": "Hey!",
+  },
+  Object {
+    "envelope": Object {
+      "from": "sender@email.com",
+      "to": "other@mail.com",
+    },
+    "from": "sender@email.com",
+    "headers": Object {
+      "Bcc": Array [
+        "some@email.com",
+        "other@mail.com",
+      ],
+    },
+    "html": "Hey!",
+  },
+]
+`;
+
+exports[`splitByRecipients works with multiple cc 1`] = `
+Array [
+  Object {
+    "envelope": Object {
+      "from": "sender@email.com",
+      "to": "some@email.com",
+    },
+    "from": "sender@email.com",
+    "headers": Object {
+      "Cc": Array [
+        "some@email.com",
+        "other@mail.com",
+      ],
+    },
+    "html": "Hey!",
+  },
+  Object {
+    "envelope": Object {
+      "from": "sender@email.com",
+      "to": "other@mail.com",
+    },
+    "from": "sender@email.com",
+    "headers": Object {
+      "Cc": Array [
+        "some@email.com",
+        "other@mail.com",
+      ],
+    },
+    "html": "Hey!",
+  },
+]
+`;
+
+exports[`splitByRecipients works with multiple to 1`] = `
+Array [
+  Object {
+    "envelope": Object {
+      "from": "sender@email.com",
+      "to": "some@email.com",
+    },
+    "from": "sender@email.com",
+    "headers": Object {
+      "To": Array [
+        "some@email.com",
+        "other@mail.com",
+      ],
+    },
+    "html": "Hey!",
+  },
+  Object {
+    "envelope": Object {
+      "from": "sender@email.com",
+      "to": "other@mail.com",
+    },
+    "from": "sender@email.com",
+    "headers": Object {
+      "To": Array [
+        "some@email.com",
+        "other@mail.com",
+      ],
+    },
+    "html": "Hey!",
+  },
+]
+`;
