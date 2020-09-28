@@ -32,6 +32,24 @@ Array [
 ]
 `;
 
+exports[`splitByRecipients works with 1 multiple bcc (with name) 1`] = `
+Array [
+  Object {
+    "envelope": Object {
+      "from": "sender@email.com",
+      "to": "Some Email <some@email.com>",
+    },
+    "from": "sender@email.com",
+    "headers": Object {
+      "Bcc": Array [
+        "Some Email <some@email.com>",
+      ],
+    },
+    "html": "Hey!",
+  },
+]
+`;
+
 exports[`splitByRecipients works with 1 multiple bcc 1`] = `
 Array [
   Object {
@@ -50,6 +68,24 @@ Array [
 ]
 `;
 
+exports[`splitByRecipients works with 1 multiple cc (with name) 1`] = `
+Array [
+  Object {
+    "envelope": Object {
+      "from": "sender@email.com",
+      "to": "Some Email <some@email.com>",
+    },
+    "from": "sender@email.com",
+    "headers": Object {
+      "Cc": Array [
+        "Some Email <some@email.com>",
+      ],
+    },
+    "html": "Hey!",
+  },
+]
+`;
+
 exports[`splitByRecipients works with 1 multiple cc 1`] = `
 Array [
   Object {
@@ -61,6 +97,24 @@ Array [
     "headers": Object {
       "Cc": Array [
         "some@email.com",
+      ],
+    },
+    "html": "Hey!",
+  },
+]
+`;
+
+exports[`splitByRecipients works with 1 multiple to (with name) 1`] = `
+Array [
+  Object {
+    "envelope": Object {
+      "from": "sender@email.com",
+      "to": "Some Email <some@email.com>",
+    },
+    "from": "sender@email.com",
+    "headers": Object {
+      "To": Array [
+        "Some Email <some@email.com>",
       ],
     },
     "html": "Hey!",

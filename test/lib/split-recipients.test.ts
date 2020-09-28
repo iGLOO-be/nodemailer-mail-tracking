@@ -88,6 +88,15 @@ describe('splitByRecipients', () => {
         })
       ).toMatchSnapshot();
     });
+    it(`works with 1 multiple ${attr} (with name)`, () => {
+      expect(
+        splitByRecipients({
+          from: 'sender@email.com',
+          [attr]: ['Some Email <some@email.com>'],
+          html: 'Hey!',
+        })
+      ).toMatchSnapshot();
+    });
     it(`works with multiple ${attr}`, () => {
       expect(
         splitByRecipients({
