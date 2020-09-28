@@ -4,6 +4,7 @@ import {
   SendMailOptionsWithHtml,
   MailTrackOptions,
   JwtData,
+  SendMailOptionsPatched,
 } from './types';
 import { splitByRecipients } from './lib/split-recipients';
 import { addBlankImage, patchLinks } from './lib/patch-html';
@@ -21,12 +22,14 @@ export const sendMail = async (
     return [await transporter.sendMail(sendMailOptions)];
   }
 
-  const sendOptions = splitByRecipients(sendMailOptions).map(o => {
+  const sendOptions: SendMailOptionsPatched[] = splitByRecipients(
+    sendMailOptions
+  ).map(o => {
     const data = {
       recipient:
-        (o.envelope.to &&
-          (Array.isArray(o.envelope.to) ? o.envelope.to[0] : o.envelope.to)) ||
-        '',
+        typeof o.envelope.to === 'object'
+          ? o.envelope.to.address
+          : o.envelope.to,
     };
     const tokenData = {
       ...options.getData(data),

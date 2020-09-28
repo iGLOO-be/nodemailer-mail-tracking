@@ -1,5 +1,21 @@
 import { Transporter } from 'nodemailer';
 
+interface Address {
+  name: string;
+  address: string;
+}
+
+interface Envelope {
+  /** the first address gets used as MAIL FROM address in SMTP */
+  from?: string;
+  /** addresses from this value get added to RCPT TO list */
+  to?: string;
+  /** addresses from this value get added to RCPT TO list */
+  cc?: string;
+  /** addresses from this value get added to RCPT TO list */
+  bcc?: string;
+}
+
 export type SendMailOptions = Parameters<Transporter['sendMail']>['0'];
 export type IRecipient =
   | SendMailOptions['to']
@@ -10,8 +26,13 @@ export type SendMailOptionsWithHtml = SendMailOptions & {
   html: string;
 };
 
-export type SendMailOptionsPatched = SendMailOptionsWithHtml & {
-  envelope: NonNullable<SendMailOptions['envelope']>;
+export type SendMailOptionsPatched = Omit<
+  SendMailOptionsWithHtml,
+  'envelope'
+> & {
+  envelope: Omit<Envelope, 'to'> & {
+    to: string | Address;
+  };
 };
 
 export interface MailTrackOptions {

@@ -5,29 +5,25 @@ import {
   IRecipient,
 } from '../types';
 
+const recipientKeys = ['to', 'cc', 'bcc'];
+
 export const splitByRecipients = (
   options: SendMailOptionsWithHtml
 ): SendMailOptionsPatched[] => {
-  const recipientKeys = ['to', 'cc', 'bcc'];
-  const results: SendMailOptionsPatched[] = [];
-
-  for (let recipientKey of recipientKeys) {
-    if (options[recipientKey as keyof typeof options]) {
-      results.push(
-        patchSendMailOptions(
-          options[recipientKey as keyof typeof options] as IRecipient,
-          options
-        )
-      );
-    }
-  }
-  return results;
+  return recipientKeys
+    .map(
+      recipientKey =>
+        options[recipientKey as keyof typeof options] as IRecipient
+    )
+    .map(recipient => patchSendMailOptions(recipient, options))
+    .flat()
+    .filter(<T>(n?: T): n is T => Boolean(n));
 };
 
 const patchSendMailOptions = (
   recipient: IRecipient,
   { to, cc, bcc, ...options }: SendMailOptionsWithHtml
-): SendMailOptionsPatched => {
+): SendMailOptionsPatched[] | undefined => {
   const headers: SendMailOptions['headers'] = {};
   const toAddress = getRecipientAddress(to);
   if (toAddress) {
@@ -43,19 +39,19 @@ const patchSendMailOptions = (
   }
 
   const from = getRecipientAddress(options.from);
-  const rcptTo = getRecipientAddress(recipient);
+  const rcptTo = toArrayString(getRecipientAddress(recipient)) || [];
 
-  return {
+  return rcptTo.map(recipient => ({
     ...options,
     headers: {
       ...options.headers,
       ...headers,
     },
     envelope: {
-      from: (Array.isArray(from) ? from[0] : from) || false,
-      to: Array.isArray(rcptTo) ? rcptTo : [rcptTo as string],
+      from: Array.isArray(from) ? from[0] : from,
+      to: recipient,
     },
-  };
+  }));
 };
 
 function getRecipientAddress(
@@ -66,7 +62,7 @@ function getRecipientAddress(
     : Array.isArray(recipient)
     ? recipient
         .map(r => {
-          return r === 'string'
+          return typeof r === 'string'
             ? r
             : ((r as any).address as string) || undefined;
         })
@@ -74,4 +70,8 @@ function getRecipientAddress(
     : recipient?.address
     ? recipient.address
     : undefined;
+}
+
+function toArrayString(value?: string | string[]): string[] | undefined {
+  return typeof value === 'undefined' || Array.isArray(value) ? value : [value];
 }
