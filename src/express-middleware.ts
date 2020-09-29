@@ -1,16 +1,16 @@
 import express from 'express';
-import { MailTrackOptions, JwtData, JwtDataForLink } from './types';
+import { MailTrackOptionsMiddleware, JwtData, JwtDataForLink } from './types';
 import { decode, isDecodeError } from './lib/jwt';
 
 const image = `<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" width="1" height="1"/>`;
 
-export function expressApp(options: MailTrackOptions) {
+export function expressApp(options: MailTrackOptionsMiddleware) {
   const app = express();
 
-  app.get('/link/:jwt', (req, res, next) => {
+  app.get('/link/:jwt', async (req, res, next) => {
     try {
       const data = decode(options, req.params.jwt) as JwtDataForLink;
-      options.onLinkClick(data);
+      await options.onLinkClick(data);
       res.redirect(data.link);
     } catch (err) {
       if (isDecodeError(err)) {
@@ -21,10 +21,10 @@ export function expressApp(options: MailTrackOptions) {
     }
   });
 
-  app.get('/blank-image/:jwt', (req, res, next) => {
+  app.get('/blank-image/:jwt', async (req, res, next) => {
     try {
       const data = decode(options, req.params.jwt) as JwtData;
-      options.onBlankImageView(data);
+      await options.onBlankImageView(data);
       res.set('Content-Type', 'image/svg+xml');
       res.send(image);
     } catch (err) {

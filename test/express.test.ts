@@ -10,13 +10,12 @@ const mockedVerify = verify as jest.Mock<{}>;
 const options = {
   baseUrl: 'http://some-path',
   jwtSecret: 'qsdsd',
-  onLinkClick: (data: JwtDataForLink) => {
+  onLinkClick: async (data: JwtDataForLink) => {
     console.log(data);
   },
-  onBlankImageView: (data: JwtData) => {
+  onBlankImageView: async (data: JwtData) => {
     console.log(data);
   },
-  getData: () => ({}),
 };
 
 const getApp = (options: Parameters<typeof expressApp>[0]) => {
@@ -71,6 +70,19 @@ describe('express', () => {
 
       expect(onLinkClick).toBeCalledTimes(0);
     });
+    it('Should catch error', async () => {
+      mockedVerify.mockImplementation(() => ({ recipient: 'foo' }));
+
+      const app = getApp({
+        ...options,
+        onLinkClick: async () => {
+          throw new Error('Boom');
+        },
+      });
+      await request(app)
+        .get('/link/some-jwt-token')
+        .expect(500);
+    });
   });
   describe('blank-image', () => {
     it('Get blank image with valid token', async () => {
@@ -95,13 +107,25 @@ describe('express', () => {
       const app = getApp({
         ...options,
         onBlankImageView,
-        getData: () => ({}),
       });
       await request(app)
         .get('/blank-image/some-jwt-token')
         .expect(404);
 
       expect(onBlankImageView).toBeCalledTimes(0);
+    });
+    it('Should catch error', async () => {
+      mockedVerify.mockImplementation(() => ({ recipient: 'foo' }));
+
+      const app = getApp({
+        ...options,
+        onBlankImageView: async () => {
+          throw new Error('Boom');
+        },
+      });
+      await request(app)
+        .get('/blank-image/some-jwt-token')
+        .expect(500);
     });
   });
 });

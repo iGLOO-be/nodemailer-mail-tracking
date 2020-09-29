@@ -35,17 +35,26 @@ export type SendMailOptionsPatched = Omit<
   };
 };
 
-export interface MailTrackOptions {
+interface MailTrackOptionsBase {
   baseUrl: string; // ex: https://some-domain.com/api/mailtrack
   jwtSecret: string;
+}
+
+export interface MailTrackOptionsSendMail extends MailTrackOptionsBase {
   getData: (
     data: JwtData | JwtDataForLink
   ) => {
     [key: string]: any;
   };
-  onLinkClick: (data: JwtDataForLink) => void;
-  onBlankImageView: (data: JwtData) => void;
 }
+
+export interface MailTrackOptionsMiddleware extends MailTrackOptionsBase {
+  onLinkClick: (data: JwtDataForLink) => Promise<void>;
+  onBlankImageView: (data: JwtData) => Promise<void>;
+}
+
+export type MailTrackOptions = MailTrackOptionsSendMail &
+  MailTrackOptionsMiddleware;
 
 export interface JwtData {
   recipient: string;
