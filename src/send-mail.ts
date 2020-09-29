@@ -2,7 +2,7 @@ import { Transporter, SentMessageInfo } from 'nodemailer';
 import {
   SendMailOptions,
   SendMailOptionsWithHtml,
-  MailTrackOptions,
+  MailTrackOptionsSendMail,
   JwtData,
   SendMailOptionsPatched,
 } from './types';
@@ -14,7 +14,7 @@ function isMailOptionsWithHtml(v: any): v is SendMailOptionsWithHtml {
 }
 
 export const sendMail = async (
-  options: MailTrackOptions,
+  options: MailTrackOptionsSendMail,
   transporter: Transporter,
   sendMailOptions: SendMailOptions
 ): Promise<SentMessageInfo[]> => {
@@ -26,7 +26,7 @@ export const sendMail = async (
 };
 
 const getSendOptions = (
-  options: MailTrackOptions,
+  options: MailTrackOptionsSendMail,
   sendMailOptions: SendMailOptionsWithHtml
 ): SendMailOptionsPatched[] => {
   return splitByRecipients(sendMailOptions).map(o => {
@@ -48,7 +48,7 @@ const getSendOptions = (
 };
 
 const patchHtmlBody = (
-  options: MailTrackOptions,
+  options: MailTrackOptionsSendMail,
   html: string,
   data: JwtData
 ) => {

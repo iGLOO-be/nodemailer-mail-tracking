@@ -1,16 +1,14 @@
 import { extractEmails, sendMail } from '../src/send-mail';
-import { MailTrackOptions } from '../src/types';
+import { MailTrackOptionsSendMail } from '../src/types';
 
 jest.mock('nodemailer');
 const nodemailer = require('nodemailer'); // doesn't work with import
 const sendMailMock = jest.fn();
 nodemailer.createTransport.mockReturnValue({ sendMail: sendMailMock });
 
-const mailTrackingOptions: MailTrackOptions = {
+const mailTrackingOptions: MailTrackOptionsSendMail = {
   baseUrl: 'http://localhost:3000/mail-track',
   jwtSecret: 'secret',
-  onBlankImageView: () => {},
-  onLinkClick: () => {},
   getData: () => ({}),
 };
 
