@@ -21,15 +21,20 @@ export const sendMail = async (
   if (!isMailOptionsWithHtml(sendMailOptions)) {
     return [await transporter.sendMail(sendMailOptions)];
   }
+  const sendOptions = getSendOptions(options, sendMailOptions);
+  return Promise.all(sendOptions.map(o => transporter.sendMail(o)));
+};
 
-  const sendOptions: SendMailOptionsPatched[] = splitByRecipients(
-    sendMailOptions
-  ).map(o => {
+const getSendOptions = (
+  options: MailTrackOptions,
+  sendMailOptions: SendMailOptionsWithHtml
+): SendMailOptionsPatched[] => {
+  return splitByRecipients(sendMailOptions).map(o => {
     const data = {
       recipient:
         typeof o.envelope.to === 'object'
           ? o.envelope.to.address
-          : o.envelope.to,
+          : extractEmails(o.envelope.to),
     };
     const tokenData = {
       ...options.getData(data),
@@ -40,8 +45,6 @@ export const sendMail = async (
       html: patchHtmlBody(options, o.html, tokenData),
     };
   });
-
-  return Promise.all(sendOptions.map(o => transporter.sendMail(o)));
 };
 
 const patchHtmlBody = (
@@ -50,4 +53,11 @@ const patchHtmlBody = (
   data: JwtData
 ) => {
   return patchLinks(options, addBlankImage(options, html, data), data).trim();
+};
+
+export const extractEmails = (text: string) => {
+  const result = text.match(
+    /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi
+  );
+  return (result && result[0]) || '';
 };
