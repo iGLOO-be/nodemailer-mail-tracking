@@ -1,4 +1,4 @@
-import { sendMail } from '../src/send-mail';
+import { extractEmails, sendMail } from '../src/send-mail';
 import { MailTrackOptions } from '../src/types';
 
 jest.mock('nodemailer');
@@ -51,5 +51,17 @@ describe('send-mail', () => {
     });
     expect(sendMailMock).toHaveBeenCalled();
     expect(result).toHaveLength(1);
+  });
+});
+
+describe('extractEmails', () => {
+  it('Extract email from string', () => {
+    expect(extractEmails('to@mail.fake')).toBe('to@mail.fake');
+  });
+  it('Extract email from string', () => {
+    expect(extractEmails('My Name <to@mail.fake>')).toBe('to@mail.fake');
+  });
+  it('Extract email from string', () => {
+    expect(extractEmails('bla bla bla')).toBe('');
   });
 });
