@@ -56,10 +56,13 @@ describe('extractEmails', () => {
   it('Extract email from string', () => {
     expect(extractEmails('to@mail.fake')).toBe('to@mail.fake');
   });
-  it('Extract email from string', () => {
+  it('Extract email from string (with name)', () => {
     expect(extractEmails('My Name <to@mail.fake>')).toBe('to@mail.fake');
   });
-  it('Extract email from string', () => {
+  it('Fail to extract email from string', () => {
     expect(extractEmails('bla bla bla')).toBe('');
+  });
+  it('Extract email from string (name & +)', () => {
+    expect(extractEmails('Test <me+test@mail.fake>')).toBe('me+test@mail.fake');
   });
 });

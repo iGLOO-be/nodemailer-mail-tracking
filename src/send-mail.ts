@@ -56,8 +56,9 @@ const patchHtmlBody = (
 };
 
 export const extractEmails = (text: string) => {
+  // d\+1 = "+"
   const result = text.match(
-    /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi
+    /([a-zA-Z0-9._-]+[d\+1]?[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi
   );
   return (result && result[0]) || '';
 };
