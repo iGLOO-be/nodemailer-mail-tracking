@@ -13,16 +13,54 @@ function isMailOptionsWithHtml(v: any): v is SendMailOptionsWithHtml {
   return v.html && typeof v.html === 'string';
 }
 
+type SendMailResult = {
+  result?: SentMessageInfo;
+  error?: any;
+  sendOptions: SendMailOptions | SendMailOptionsPatched;
+};
+
 export const sendMail = async (
   options: MailTrackOptionsSendMail,
   transporter: Transporter,
   sendMailOptions: SendMailOptions
-): Promise<SentMessageInfo[]> => {
+): Promise<SendMailResult[]> => {
   if (!isMailOptionsWithHtml(sendMailOptions)) {
-    return [await transporter.sendMail(sendMailOptions)];
+    try {
+      const result: SentMessageInfo = await transporter.sendMail(
+        sendMailOptions
+      );
+      return [
+        {
+          result: result,
+          sendOptions: sendMailOptions,
+        },
+      ];
+    } catch (error) {
+      return [
+        {
+          error,
+          sendOptions: sendMailOptions,
+        },
+      ];
+    }
   }
   const sendOptions = getSendOptions(options, sendMailOptions);
-  return Promise.all(sendOptions.map(o => transporter.sendMail(o)));
+  return Promise.all(
+    sendOptions.map(async o => {
+      try {
+        const result = await transporter.sendMail(o);
+        return {
+          result: [result],
+          sendOptions: o,
+        };
+      } catch (error) {
+        return {
+          error,
+          sendOptions: o,
+        };
+      }
+    })
+  );
 };
 
 const getSendOptions = (
