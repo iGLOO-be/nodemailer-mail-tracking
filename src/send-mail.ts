@@ -50,7 +50,7 @@ export const sendMail = async (
       try {
         const result = await transporter.sendMail(o);
         return {
-          result: [result],
+          result,
           sendOptions: o,
         };
       } catch (error) {
