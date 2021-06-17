@@ -81,6 +81,33 @@ describe('path-html', () => {
               "
       `);
     });
+    it('with anchor', () => {
+      expect(
+        patchLinks(
+          options,
+          `
+        <html>
+          <body>
+            <h1>Hello world</h1>
+            <a href="#">Click me</a>
+            <a href="#some-path">Click me 2</a>
+          </body>
+        </html>
+      `,
+          data
+        )
+      ).toMatchInlineSnapshot(`
+        "
+                <html>
+                  <body>
+                    <h1>Hello world</h1>
+                    <a href=\\"#\\">Click me</a>
+                    <a href=\\"#some-path\\">Click me 2</a>
+                  </body>
+                </html>
+              "
+      `);
+    });
     it('with links with attrs', () => {
       expect(
         patchLinks(
