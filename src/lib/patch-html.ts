@@ -25,7 +25,7 @@ export const patchLinks = (
 ) => {
   return html.replace(linkRE, (_, first, link, end) => {
     if (link.match(/^#/)) {
-      return [first, link, end].join('')
+      return [first, link, end].join('');
     }
     const jwtData: JwtDataForLink = {
       ...data,
