@@ -49,6 +49,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "nodemailer": "^6.4.11"
+    "nodemailer": "^6.4.11",
+    "p-map": "^4"
   }
 }

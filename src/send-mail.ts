@@ -1,4 +1,5 @@
 import { Transporter, SentMessageInfo } from 'nodemailer';
+import pMap from 'p-map';
 import {
   SendMailOptions,
   SendMailOptionsWithHtml,
@@ -45,8 +46,9 @@ export const sendMail = async (
     }
   }
   const sendOptions = getSendOptions(options, sendMailOptions);
-  return Promise.all(
-    sendOptions.map(async o => {
+  return pMap(
+    sendOptions,
+    async o => {
       try {
         const result = await transporter.sendMail(o);
         return {
@@ -59,7 +61,10 @@ export const sendMail = async (
           sendOptions: o,
         };
       }
-    })
+    },
+    {
+      concurrency: options.sendConcurrency || Infinity,
+    }
   );
 };
 

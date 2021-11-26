@@ -41,6 +41,7 @@ interface MailTrackOptionsBase {
 }
 
 export interface MailTrackOptionsSendMail extends MailTrackOptionsBase {
+  sendConcurrency?: number;
   getData: (
     data: JwtData | JwtDataForLink
   ) => {
