@@ -48,17 +48,20 @@ export const sendMail = async (
   const sendOptions = getSendOptions(options, sendMailOptions);
   return pMap(
     sendOptions,
-    async o => {
+    async sendOptions => {
       try {
-        const result = await transporter.sendMail(o);
+        if (options.getSendOptionsBeforeSend) {
+          sendOptions = await options.getSendOptionsBeforeSend(sendOptions);
+        }
+        const result = await transporter.sendMail(sendOptions);
         return {
           result,
-          sendOptions: o,
+          sendOptions: sendOptions,
         };
       } catch (error) {
         return {
           error,
-          sendOptions: o,
+          sendOptions: sendOptions,
         };
       }
     },
@@ -101,7 +104,7 @@ const patchHtmlBody = (
 export const extractEmails = (text: string) => {
   // d\+1 = "+"
   const result = text.match(
-    /([a-zA-Z0-9._-]+[d\+1]?[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi
+    /([a-zA-Z0-9._-]+[d+1]?[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi
   );
   return (result && result[0]) || '';
 };

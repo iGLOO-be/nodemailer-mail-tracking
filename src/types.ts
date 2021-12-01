@@ -47,6 +47,9 @@ export interface MailTrackOptionsSendMail extends MailTrackOptionsBase {
   ) => {
     [key: string]: any;
   };
+  getSendOptionsBeforeSend?: (
+    options: SendMailOptionsPatched
+  ) => SendMailOptionsPatched;
 }
 
 export interface MailTrackOptionsMiddleware extends MailTrackOptionsBase {
