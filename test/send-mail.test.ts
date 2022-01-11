@@ -34,7 +34,50 @@ describe('send-mail', () => {
         </html>
       `,
     });
-    expect(sendMailMock).toHaveBeenCalled();
+    expect(sendMailMock.mock.calls.flat().map(({ html, ...rest }) => rest))
+      .toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "envelope": Object {
+            "from": "me@mail.fake",
+            "to": "to@mail.fake",
+          },
+          "from": "me@mail.fake",
+          "headers": Object {
+            "Bcc": "bcc@mail.fake",
+            "Cc": "cc@mail.fake",
+            "To": "to@mail.fake",
+          },
+          "subject": "test",
+        },
+        Object {
+          "envelope": Object {
+            "from": "me@mail.fake",
+            "to": "cc@mail.fake",
+          },
+          "from": "me@mail.fake",
+          "headers": Object {
+            "Bcc": "bcc@mail.fake",
+            "Cc": "cc@mail.fake",
+            "To": "to@mail.fake",
+          },
+          "subject": "test",
+        },
+        Object {
+          "envelope": Object {
+            "from": "me@mail.fake",
+            "to": "bcc@mail.fake",
+          },
+          "from": "me@mail.fake",
+          "headers": Object {
+            "Bcc": "bcc@mail.fake",
+            "Cc": "cc@mail.fake",
+            "To": "to@mail.fake",
+          },
+          "subject": "test",
+        },
+      ]
+    `);
     expect(result).toHaveLength(3);
   });
   it('Should not split mail by recipient because no html', async () => {
@@ -47,7 +90,19 @@ describe('send-mail', () => {
       subject: 'test',
       text: 'Hello !',
     });
-    expect(sendMailMock).toHaveBeenCalled();
+    expect(sendMailMock.mock.calls.flat().map(({ html, ...rest }) => rest))
+      .toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "bcc": "bcc@mail.fake",
+          "cc": "cc@mail.fake",
+          "from": "me@mail.fake",
+          "subject": "test",
+          "text": "Hello !",
+          "to": "to@mail.fake",
+        },
+      ]
+    `);
     expect(result).toHaveLength(1);
   });
 });
