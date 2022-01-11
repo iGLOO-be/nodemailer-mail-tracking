@@ -22,9 +22,9 @@ describe('send-mail', () => {
     const transporter = nodemailer.createTransport();
     const result = await sendMail(mailTrackingOptions, transporter, {
       from: 'me@mail.fake',
-      to: 'to@mail.fake',
-      cc: 'cc@mail.fake',
-      bcc: 'bcc@mail.fake',
+      to: ['to@mail.fake', 'to2@mail.fake'],
+      cc: ['cc@mail.fake', 'cc2@mail.fake'],
+      bcc: ['bcc@mail.fake', 'bcc2@mail.fake'],
       subject: 'test',
       html: `
         <html>
@@ -34,6 +34,7 @@ describe('send-mail', () => {
         </html>
       `,
     });
+    expect(result).toHaveLength(6);
     expect(sendMailMock.mock.calls.flat().map(({ html, ...rest }) => rest))
       .toMatchInlineSnapshot(`
       Array [
@@ -44,9 +45,40 @@ describe('send-mail', () => {
           },
           "from": "me@mail.fake",
           "headers": Object {
-            "Bcc": "bcc@mail.fake",
-            "Cc": "cc@mail.fake",
-            "To": "to@mail.fake",
+            "Bcc": Array [
+              "bcc@mail.fake",
+              "bcc2@mail.fake",
+            ],
+            "Cc": Array [
+              "cc@mail.fake",
+              "cc2@mail.fake",
+            ],
+            "To": Array [
+              "to@mail.fake",
+              "to2@mail.fake",
+            ],
+          },
+          "subject": "test",
+        },
+        Object {
+          "envelope": Object {
+            "from": "me@mail.fake",
+            "to": "to2@mail.fake",
+          },
+          "from": "me@mail.fake",
+          "headers": Object {
+            "Bcc": Array [
+              "bcc@mail.fake",
+              "bcc2@mail.fake",
+            ],
+            "Cc": Array [
+              "cc@mail.fake",
+              "cc2@mail.fake",
+            ],
+            "To": Array [
+              "to@mail.fake",
+              "to2@mail.fake",
+            ],
           },
           "subject": "test",
         },
@@ -57,9 +89,40 @@ describe('send-mail', () => {
           },
           "from": "me@mail.fake",
           "headers": Object {
-            "Bcc": "bcc@mail.fake",
-            "Cc": "cc@mail.fake",
-            "To": "to@mail.fake",
+            "Bcc": Array [
+              "bcc@mail.fake",
+              "bcc2@mail.fake",
+            ],
+            "Cc": Array [
+              "cc@mail.fake",
+              "cc2@mail.fake",
+            ],
+            "To": Array [
+              "to@mail.fake",
+              "to2@mail.fake",
+            ],
+          },
+          "subject": "test",
+        },
+        Object {
+          "envelope": Object {
+            "from": "me@mail.fake",
+            "to": "cc2@mail.fake",
+          },
+          "from": "me@mail.fake",
+          "headers": Object {
+            "Bcc": Array [
+              "bcc@mail.fake",
+              "bcc2@mail.fake",
+            ],
+            "Cc": Array [
+              "cc@mail.fake",
+              "cc2@mail.fake",
+            ],
+            "To": Array [
+              "to@mail.fake",
+              "to2@mail.fake",
+            ],
           },
           "subject": "test",
         },
@@ -70,15 +133,45 @@ describe('send-mail', () => {
           },
           "from": "me@mail.fake",
           "headers": Object {
-            "Bcc": "bcc@mail.fake",
-            "Cc": "cc@mail.fake",
-            "To": "to@mail.fake",
+            "Bcc": Array [
+              "bcc@mail.fake",
+              "bcc2@mail.fake",
+            ],
+            "Cc": Array [
+              "cc@mail.fake",
+              "cc2@mail.fake",
+            ],
+            "To": Array [
+              "to@mail.fake",
+              "to2@mail.fake",
+            ],
+          },
+          "subject": "test",
+        },
+        Object {
+          "envelope": Object {
+            "from": "me@mail.fake",
+            "to": "bcc2@mail.fake",
+          },
+          "from": "me@mail.fake",
+          "headers": Object {
+            "Bcc": Array [
+              "bcc@mail.fake",
+              "bcc2@mail.fake",
+            ],
+            "Cc": Array [
+              "cc@mail.fake",
+              "cc2@mail.fake",
+            ],
+            "To": Array [
+              "to@mail.fake",
+              "to2@mail.fake",
+            ],
           },
           "subject": "test",
         },
       ]
     `);
-    expect(result).toHaveLength(3);
   });
   it('Should not split mail by recipient because no html', async () => {
     const transporter = nodemailer.createTransport();
