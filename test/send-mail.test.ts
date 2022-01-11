@@ -22,9 +22,9 @@ describe('send-mail', () => {
     const transporter = nodemailer.createTransport();
     const result = await sendMail(mailTrackingOptions, transporter, {
       from: 'me@mail.fake',
-      to: ['to@mail.fake', 'to2@mail.fake'],
-      cc: ['cc@mail.fake', 'cc2@mail.fake'],
-      bcc: ['bcc@mail.fake', 'bcc2@mail.fake'],
+      to: ['to@mail.fake', { name: 'To2', address: 'to2@mail.fake' }],
+      cc: ['cc@mail.fake', { name: 'cc2', address: 'cc2@mail.fake' }],
+      bcc: ['bcc@mail.fake', { name: 'bcc2', address: 'bcc2@mail.fake' }],
       subject: 'test',
       html: `
         <html>
@@ -45,18 +45,9 @@ describe('send-mail', () => {
           },
           "from": "me@mail.fake",
           "headers": Object {
-            "Bcc": Array [
-              "bcc@mail.fake",
-              "bcc2@mail.fake",
-            ],
-            "Cc": Array [
-              "cc@mail.fake",
-              "cc2@mail.fake",
-            ],
-            "To": Array [
-              "to@mail.fake",
-              "to2@mail.fake",
-            ],
+            "Bcc": "bcc@mail.fake, bcc2@mail.fake",
+            "Cc": "cc@mail.fake, cc2@mail.fake",
+            "To": "to@mail.fake, to2@mail.fake",
           },
           "subject": "test",
         },
@@ -67,18 +58,9 @@ describe('send-mail', () => {
           },
           "from": "me@mail.fake",
           "headers": Object {
-            "Bcc": Array [
-              "bcc@mail.fake",
-              "bcc2@mail.fake",
-            ],
-            "Cc": Array [
-              "cc@mail.fake",
-              "cc2@mail.fake",
-            ],
-            "To": Array [
-              "to@mail.fake",
-              "to2@mail.fake",
-            ],
+            "Bcc": "bcc@mail.fake, bcc2@mail.fake",
+            "Cc": "cc@mail.fake, cc2@mail.fake",
+            "To": "to@mail.fake, to2@mail.fake",
           },
           "subject": "test",
         },
@@ -89,18 +71,9 @@ describe('send-mail', () => {
           },
           "from": "me@mail.fake",
           "headers": Object {
-            "Bcc": Array [
-              "bcc@mail.fake",
-              "bcc2@mail.fake",
-            ],
-            "Cc": Array [
-              "cc@mail.fake",
-              "cc2@mail.fake",
-            ],
-            "To": Array [
-              "to@mail.fake",
-              "to2@mail.fake",
-            ],
+            "Bcc": "bcc@mail.fake, bcc2@mail.fake",
+            "Cc": "cc@mail.fake, cc2@mail.fake",
+            "To": "to@mail.fake, to2@mail.fake",
           },
           "subject": "test",
         },
@@ -111,18 +84,9 @@ describe('send-mail', () => {
           },
           "from": "me@mail.fake",
           "headers": Object {
-            "Bcc": Array [
-              "bcc@mail.fake",
-              "bcc2@mail.fake",
-            ],
-            "Cc": Array [
-              "cc@mail.fake",
-              "cc2@mail.fake",
-            ],
-            "To": Array [
-              "to@mail.fake",
-              "to2@mail.fake",
-            ],
+            "Bcc": "bcc@mail.fake, bcc2@mail.fake",
+            "Cc": "cc@mail.fake, cc2@mail.fake",
+            "To": "to@mail.fake, to2@mail.fake",
           },
           "subject": "test",
         },
@@ -133,18 +97,9 @@ describe('send-mail', () => {
           },
           "from": "me@mail.fake",
           "headers": Object {
-            "Bcc": Array [
-              "bcc@mail.fake",
-              "bcc2@mail.fake",
-            ],
-            "Cc": Array [
-              "cc@mail.fake",
-              "cc2@mail.fake",
-            ],
-            "To": Array [
-              "to@mail.fake",
-              "to2@mail.fake",
-            ],
+            "Bcc": "bcc@mail.fake, bcc2@mail.fake",
+            "Cc": "cc@mail.fake, cc2@mail.fake",
+            "To": "to@mail.fake, to2@mail.fake",
           },
           "subject": "test",
         },
@@ -155,18 +110,9 @@ describe('send-mail', () => {
           },
           "from": "me@mail.fake",
           "headers": Object {
-            "Bcc": Array [
-              "bcc@mail.fake",
-              "bcc2@mail.fake",
-            ],
-            "Cc": Array [
-              "cc@mail.fake",
-              "cc2@mail.fake",
-            ],
-            "To": Array [
-              "to@mail.fake",
-              "to2@mail.fake",
-            ],
+            "Bcc": "bcc@mail.fake, bcc2@mail.fake",
+            "Cc": "cc@mail.fake, cc2@mail.fake",
+            "To": "to@mail.fake, to2@mail.fake",
           },
           "subject": "test",
         },

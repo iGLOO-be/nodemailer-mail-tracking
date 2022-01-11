@@ -20,6 +20,9 @@ export const splitByRecipients = (
     .filter(<T>(n?: T): n is T => Boolean(n));
 };
 
+const joinRecipients = (recipients: string | string[]) =>
+  Array.isArray(recipients) ? recipients.join(', ') : recipients;
+
 const patchSendMailOptions = (
   recipient: IRecipient,
   { to, cc, bcc, ...options }: SendMailOptionsWithHtml
@@ -27,15 +30,15 @@ const patchSendMailOptions = (
   const headers: SendMailOptions['headers'] = {};
   const toAddress = getRecipientAddress(to);
   if (toAddress) {
-    headers.To = toAddress;
+    headers.To = joinRecipients(toAddress);
   }
   const ccAddress = getRecipientAddress(cc);
   if (ccAddress) {
-    headers.Cc = ccAddress;
+    headers.Cc = joinRecipients(ccAddress);
   }
   const bccAddress = getRecipientAddress(bcc);
   if (bccAddress) {
-    headers.Bcc = bccAddress;
+    headers.Bcc = joinRecipients(bccAddress);
   }
 
   const from = getRecipientAddress(options.from);

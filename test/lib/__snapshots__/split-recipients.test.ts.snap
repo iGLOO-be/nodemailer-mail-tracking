@@ -41,9 +41,7 @@ Array [
     },
     "from": "sender@email.com",
     "headers": Object {
-      "Bcc": Array [
-        "Some Email <some@email.com>",
-      ],
+      "Bcc": "Some Email <some@email.com>",
     },
     "html": "Hey!",
   },
@@ -59,9 +57,7 @@ Array [
     },
     "from": "sender@email.com",
     "headers": Object {
-      "Bcc": Array [
-        "some@email.com",
-      ],
+      "Bcc": "some@email.com",
     },
     "html": "Hey!",
   },
@@ -77,9 +73,7 @@ Array [
     },
     "from": "sender@email.com",
     "headers": Object {
-      "Cc": Array [
-        "Some Email <some@email.com>",
-      ],
+      "Cc": "Some Email <some@email.com>",
     },
     "html": "Hey!",
   },
@@ -95,9 +89,7 @@ Array [
     },
     "from": "sender@email.com",
     "headers": Object {
-      "Cc": Array [
-        "some@email.com",
-      ],
+      "Cc": "some@email.com",
     },
     "html": "Hey!",
   },
@@ -113,9 +105,7 @@ Array [
     },
     "from": "sender@email.com",
     "headers": Object {
-      "To": Array [
-        "Some Email <some@email.com>",
-      ],
+      "To": "Some Email <some@email.com>",
     },
     "html": "Hey!",
   },
@@ -131,9 +121,7 @@ Array [
     },
     "from": "sender@email.com",
     "headers": Object {
-      "To": Array [
-        "some@email.com",
-      ],
+      "To": "some@email.com",
     },
     "html": "Hey!",
   },
@@ -165,10 +153,7 @@ Array [
     },
     "from": "sender@email.com",
     "headers": Object {
-      "Bcc": Array [
-        "some@email.com",
-        "other@mail.com",
-      ],
+      "Bcc": "some@email.com, other@mail.com",
     },
     "html": "Hey!",
   },
@@ -179,10 +164,7 @@ Array [
     },
     "from": "sender@email.com",
     "headers": Object {
-      "Bcc": Array [
-        "some@email.com",
-        "other@mail.com",
-      ],
+      "Bcc": "some@email.com, other@mail.com",
     },
     "html": "Hey!",
   },
@@ -198,10 +180,7 @@ Array [
     },
     "from": "sender@email.com",
     "headers": Object {
-      "Cc": Array [
-        "some@email.com",
-        "other@mail.com",
-      ],
+      "Cc": "some@email.com, other@mail.com",
     },
     "html": "Hey!",
   },
@@ -212,10 +191,7 @@ Array [
     },
     "from": "sender@email.com",
     "headers": Object {
-      "Cc": Array [
-        "some@email.com",
-        "other@mail.com",
-      ],
+      "Cc": "some@email.com, other@mail.com",
     },
     "html": "Hey!",
   },
@@ -231,10 +207,7 @@ Array [
     },
     "from": "sender@email.com",
     "headers": Object {
-      "To": Array [
-        "some@email.com",
-        "other@mail.com",
-      ],
+      "To": "some@email.com, other@mail.com",
     },
     "html": "Hey!",
   },
@@ -245,10 +218,7 @@ Array [
     },
     "from": "sender@email.com",
     "headers": Object {
-      "To": Array [
-        "some@email.com",
-        "other@mail.com",
-      ],
+      "To": "some@email.com, other@mail.com",
     },
     "html": "Hey!",
   },
