@@ -148,5 +148,51 @@ describe('path-html', () => {
               </body></html>"
       `);
     });
+    it('with links with mailto', () => {
+      expect(
+        patchLinks(
+          options,
+          `
+        <html>
+          <body>
+            <h1>Hello world</h1>
+            <a target=_blank href=mailto:foo@bar.com class=some-class>Click me</a>
+          </body>
+        </html>
+      `,
+          data
+        )
+      ).toMatchInlineSnapshot(`
+        "<html><head></head><body>
+                    <h1>Hello world</h1>
+                    <a target=\\"_blank\\" href=\\"mailto:foo@bar.com\\" class=\\"some-class\\">Click me</a>
+                  
+                
+              </body></html>"
+      `);
+    });
+    it('with links with no http', () => {
+      expect(
+        patchLinks(
+          options,
+          `
+        <html>
+          <body>
+            <h1>Hello world</h1>
+            <a target=_blank href=ftp://foo class=some-class>Click me</a>
+          </body>
+        </html>
+      `,
+          data
+        )
+      ).toMatchInlineSnapshot(`
+        "<html><head></head><body>
+                    <h1>Hello world</h1>
+                    <a target=\\"_blank\\" href=\\"ftp://foo\\" class=\\"some-class\\">Click me</a>
+                  
+                
+              </body></html>"
+      `);
+    });
   });
 });

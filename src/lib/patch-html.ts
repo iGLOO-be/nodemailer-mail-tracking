@@ -26,7 +26,7 @@ export const patchLinks = (
   const $ = load(html);
   $('a').each((_, el) => {
     const href = $(el).attr('href');
-    if (href && !href.startsWith('mailto:') && !href.startsWith('#')) {
+    if (href && href.startsWith('http')) {
       const jwtData: JwtDataForLink = {
         ...data,
         link: href,
