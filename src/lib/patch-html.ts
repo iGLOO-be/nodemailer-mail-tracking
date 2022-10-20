@@ -1,3 +1,4 @@
+import { load } from 'cheerio';
 import { sign, JwtOptions } from './jwt';
 import { JwtData, JwtDataForLink, MailTrackOptions } from '../types';
 
@@ -17,21 +18,22 @@ export const addBlankImage = (
   return html;
 };
 
-const linkRE = /(<a\s+(?:[^>]*?\s+)?href=")([^"]*)(")/gi;
 export const patchLinks = (
   options: Pick<MailTrackOptions, 'baseUrl'> & JwtOptions,
   html: string,
   data: JwtData
 ) => {
-  return html.replace(linkRE, (_, first, link, end) => {
-    if (link.match(/^#/)) {
-      return [first, link, end].join('');
+  const $ = load(html);
+  $('a').each((_, el) => {
+    const href = $(el).attr('href');
+    if (href && href.startsWith('http')) {
+      const jwtData: JwtDataForLink = {
+        ...data,
+        link: href,
+      };
+      const jwtLink = sign(options, jwtData);
+      $(el).attr('href', `${options.baseUrl}/link/${jwtLink}`);
     }
-    const jwtData: JwtDataForLink = {
-      ...data,
-      link,
-    };
-    const jwtLink = sign(options, jwtData);
-    return `${first}${options.baseUrl}/link/${jwtLink}${end}`;
   });
+  return $.html();
 };

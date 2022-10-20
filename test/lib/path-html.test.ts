@@ -47,13 +47,11 @@ describe('path-html', () => {
           data
         )
       ).toMatchInlineSnapshot(`
-        "
-              <html>
-                <body>
+        "<html><head></head><body>
                   <h1>Hello world</h1>
-                </body>
-              </html>
-              "
+                
+              
+              </body></html>"
       `);
     });
     it('with simple links', () => {
@@ -71,14 +69,12 @@ describe('path-html', () => {
           data
         )
       ).toMatchInlineSnapshot(`
-        "
-                <html>
-                  <body>
+        "<html><head></head><body>
                     <h1>Hello world</h1>
-                    <a href=\\"http://some-path/link/[{\\"recipient\\":\\"bar\\",\\"link\\":\\"http://google.com\\"},\\"qsdsd\\",{\\"expiresIn\\":\\"1y\\"}]\\">Click me</a>
-                  </body>
-                </html>
-              "
+                    <a href=\\"http://some-path/link/[{&quot;recipient&quot;:&quot;bar&quot;,&quot;link&quot;:&quot;http://google.com&quot;},&quot;qsdsd&quot;,{&quot;expiresIn&quot;:&quot;1y&quot;}]\\">Click me</a>
+                  
+                
+              </body></html>"
       `);
     });
     it('with anchor', () => {
@@ -97,15 +93,13 @@ describe('path-html', () => {
           data
         )
       ).toMatchInlineSnapshot(`
-        "
-                <html>
-                  <body>
+        "<html><head></head><body>
                     <h1>Hello world</h1>
                     <a href=\\"#\\">Click me</a>
                     <a href=\\"#some-path\\">Click me 2</a>
-                  </body>
-                </html>
-              "
+                  
+                
+              </body></html>"
       `);
     });
     it('with links with attrs', () => {
@@ -123,14 +117,81 @@ describe('path-html', () => {
           data
         )
       ).toMatchInlineSnapshot(`
-        "
-                <html>
-                  <body>
+        "<html><head></head><body>
                     <h1>Hello world</h1>
-                    <a target=\\"_blank\\" href=\\"http://some-path/link/[{\\"recipient\\":\\"bar\\",\\"link\\":\\"http://google.com\\"},\\"qsdsd\\",{\\"expiresIn\\":\\"1y\\"}]\\" class=\\"some-class\\">Click me</a>
-                  </body>
-                </html>
-              "
+                    <a target=\\"_blank\\" href=\\"http://some-path/link/[{&quot;recipient&quot;:&quot;bar&quot;,&quot;link&quot;:&quot;http://google.com&quot;},&quot;qsdsd&quot;,{&quot;expiresIn&quot;:&quot;1y&quot;}]\\" class=\\"some-class\\">Click me</a>
+                  
+                
+              </body></html>"
+      `);
+    });
+    it('with links without quotes', () => {
+      expect(
+        patchLinks(
+          options,
+          `
+        <html>
+          <body>
+            <h1>Hello world</h1>
+            <a target=_blank href=http://google.com class=some-class>Click me</a>
+          </body>
+        </html>
+      `,
+          data
+        )
+      ).toMatchInlineSnapshot(`
+        "<html><head></head><body>
+                    <h1>Hello world</h1>
+                    <a target=\\"_blank\\" href=\\"http://some-path/link/[{&quot;recipient&quot;:&quot;bar&quot;,&quot;link&quot;:&quot;http://google.com&quot;},&quot;qsdsd&quot;,{&quot;expiresIn&quot;:&quot;1y&quot;}]\\" class=\\"some-class\\">Click me</a>
+                  
+                
+              </body></html>"
+      `);
+    });
+    it('with links with mailto', () => {
+      expect(
+        patchLinks(
+          options,
+          `
+        <html>
+          <body>
+            <h1>Hello world</h1>
+            <a target=_blank href=mailto:foo@bar.com class=some-class>Click me</a>
+          </body>
+        </html>
+      `,
+          data
+        )
+      ).toMatchInlineSnapshot(`
+        "<html><head></head><body>
+                    <h1>Hello world</h1>
+                    <a target=\\"_blank\\" href=\\"mailto:foo@bar.com\\" class=\\"some-class\\">Click me</a>
+                  
+                
+              </body></html>"
+      `);
+    });
+    it('with links with no http', () => {
+      expect(
+        patchLinks(
+          options,
+          `
+        <html>
+          <body>
+            <h1>Hello world</h1>
+            <a target=_blank href=ftp://foo class=some-class>Click me</a>
+          </body>
+        </html>
+      `,
+          data
+        )
+      ).toMatchInlineSnapshot(`
+        "<html><head></head><body>
+                    <h1>Hello world</h1>
+                    <a target=\\"_blank\\" href=\\"ftp://foo\\" class=\\"some-class\\">Click me</a>
+                  
+                
+              </body></html>"
       `);
     });
   });
