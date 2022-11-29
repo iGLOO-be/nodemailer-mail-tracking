@@ -27,6 +27,11 @@ export const sendMail = async (
 ): Promise<SendMailResult[]> => {
   if (!isMailOptionsWithHtml(sendMailOptions)) {
     try {
+      if (options.getSendOptionsBeforeSend) {
+        sendMailOptions = await options.getSendOptionsBeforeSend(
+          sendMailOptions as SendMailOptionsPatched
+        );
+      }
       const result: SentMessageInfo = await transporter.sendMail(
         sendMailOptions
       );
