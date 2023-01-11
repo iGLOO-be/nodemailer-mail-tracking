@@ -32,10 +32,7 @@ export const patchLinks = (
         link: href,
       };
       const jwtLink = sign(options, jwtData);
-      $(el).attr(
-        'href',
-        `${options.baseUrl}/link/${encodeURIComponent(jwtLink)}`
-      );
+      $(el).attr('href', `${options.baseUrl}/link/${encodeURI(jwtLink)}`);
     }
   });
   return $.html();

@@ -71,7 +71,7 @@ describe('path-html', () => {
       ).toMatchInlineSnapshot(`
         "<html><head></head><body>
                     <h1>Hello world</h1>
-                    <a href=\\"http://some-path/link/%5B%7B%22recipient%22%3A%22bar%22%2C%22link%22%3A%22http%3A%2F%2Fgoogle.com%22%7D%2C%22qsdsd%22%2C%7B%22expiresIn%22%3A%221y%22%7D%5D\\">Click me</a>
+                    <a href=\\"http://some-path/link/%5B%7B%22recipient%22:%22bar%22,%22link%22:%22http://google.com%22%7D,%22qsdsd%22,%7B%22expiresIn%22:%221y%22%7D%5D\\">Click me</a>
                   
                 
               </body></html>"
@@ -119,7 +119,7 @@ describe('path-html', () => {
       ).toMatchInlineSnapshot(`
         "<html><head></head><body>
                     <h1>Hello world</h1>
-                    <a target=\\"_blank\\" href=\\"http://some-path/link/%5B%7B%22recipient%22%3A%22bar%22%2C%22link%22%3A%22http%3A%2F%2Fgoogle.com%22%7D%2C%22qsdsd%22%2C%7B%22expiresIn%22%3A%221y%22%7D%5D\\" class=\\"some-class\\">Click me</a>
+                    <a target=\\"_blank\\" href=\\"http://some-path/link/%5B%7B%22recipient%22:%22bar%22,%22link%22:%22http://google.com%22%7D,%22qsdsd%22,%7B%22expiresIn%22:%221y%22%7D%5D\\" class=\\"some-class\\">Click me</a>
                   
                 
               </body></html>"
@@ -142,7 +142,7 @@ describe('path-html', () => {
       ).toMatchInlineSnapshot(`
         "<html><head></head><body>
                     <h1>Hello world</h1>
-                    <a target=\\"_blank\\" href=\\"http://some-path/link/%5B%7B%22recipient%22%3A%22bar%22%2C%22link%22%3A%22http%3A%2F%2Fgoogle.com%22%7D%2C%22qsdsd%22%2C%7B%22expiresIn%22%3A%221y%22%7D%5D\\" class=\\"some-class\\">Click me</a>
+                    <a target=\\"_blank\\" href=\\"http://some-path/link/%5B%7B%22recipient%22:%22bar%22,%22link%22:%22http://google.com%22%7D,%22qsdsd%22,%7B%22expiresIn%22:%221y%22%7D%5D\\" class=\\"some-class\\">Click me</a>
                   
                 
               </body></html>"
@@ -211,7 +211,7 @@ describe('path-html', () => {
       ).toMatchInlineSnapshot(`
         "<html><head></head><body>
                     <h1>Hello world</h1>
-                    <a target=\\"_blank\\" href=\\"http://some-path/link/%5B%7B%22recipient%22%3A%22bar%22%2C%22link%22%3A%22http%3A%2F%2Fgoogle.com%22%7D%2C%22qsdsd%22%2C%7B%22expiresIn%22%3A%221y%22%7D%5D\\" class=\\"some-class\\">Click ' me</a>
+                    <a target=\\"_blank\\" href=\\"http://some-path/link/%5B%7B%22recipient%22:%22bar%22,%22link%22:%22http://google.com%22%7D,%22qsdsd%22,%7B%22expiresIn%22:%221y%22%7D%5D\\" class=\\"some-class\\">Click ' me</a>
                   
                 
               </body></html>"
