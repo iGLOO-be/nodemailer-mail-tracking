@@ -4,11 +4,22 @@ import { decode, isDecodeError } from './lib/jwt';
 
 const image = `<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" width="1" height="1"/>`;
 
-export function expressApp(options: MailTrackOptionsMiddleware) {
+export function expressApp(
+  getOptions:
+    | MailTrackOptionsMiddleware
+    | Promise<MailTrackOptionsMiddleware>
+    | (() => Promise<MailTrackOptionsMiddleware>)
+) {
   const app = express();
+
+  const resolveOptions = () =>
+    Promise.resolve(
+      typeof getOptions === 'function' ? getOptions() : getOptions
+    );
 
   app.get('/link/:jwt', async (req, res, next) => {
     try {
+      const options = await resolveOptions();
       const data = decode(options, req.params.jwt) as JwtDataForLink;
       await options.onLinkClick(data);
       res.redirect(data.link);
@@ -23,6 +34,7 @@ export function expressApp(options: MailTrackOptionsMiddleware) {
 
   app.get('/blank-image/:jwt', async (req, res, next) => {
     try {
+      const options = await resolveOptions();
       const data = decode(options, req.params.jwt) as JwtData;
       await options.onBlankImageView(data);
       res.set('Content-Type', 'image/svg+xml');
