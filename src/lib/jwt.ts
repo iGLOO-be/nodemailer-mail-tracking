@@ -23,6 +23,6 @@ export const decode = (options: JwtOptions, token: string) => {
   }
 };
 
-export function isDecodeError(error: Error) {
-  return error.name === 'JwtDecodeError';
+export function isDecodeError(error: any) {
+  return error && 'name' in error && error.name === 'JwtDecodeError';
 }
