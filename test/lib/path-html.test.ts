@@ -16,7 +16,7 @@ describe('path-html', () => {
   describe('addBlankImage', () => {
     it('without body', () => {
       expect(addBlankImage(options, `foo`, data)).toMatchInlineSnapshot(
-        `"foo<img src=\\"http://some-path/blank-image/[{\\"recipient\\":\\"bar\\"},\\"qsdsd\\",{\\"expiresIn\\":\\"1y\\"}]\\" />"`
+        `"foo<img src=\\"http://some-path/blank-image/%5B%7B%22recipient%22:%22bar%22%7D,%22qsdsd%22,%7B%22expiresIn%22:%221y%22%7D%5D\\" />"`
       );
     });
     it('with body', () => {
@@ -27,7 +27,7 @@ describe('path-html', () => {
           data
         )
       ).toMatchInlineSnapshot(
-        `"<html><head></head><body><h1>Hello</h1><p>paraph</p><img src=\\"http://some-path/blank-image/[{\\"recipient\\":\\"bar\\"},\\"qsdsd\\",{\\"expiresIn\\":\\"1y\\"}]\\" /></body>"`
+        `"<html><head></head><body><h1>Hello</h1><p>paraph</p><img src=\\"http://some-path/blank-image/%5B%7B%22recipient%22:%22bar%22%7D,%22qsdsd%22,%7B%22expiresIn%22:%221y%22%7D%5D\\" /></body>"`
       );
     });
   });

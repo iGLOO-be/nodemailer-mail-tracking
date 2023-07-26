@@ -8,7 +8,9 @@ export const addBlankImage = (
   data: JwtData
 ) => {
   const jwtImg = sign(options, data);
-  const imgTag = `<img src="${options.baseUrl}/blank-image/${jwtImg}" />`;
+  const imgTag = `<img src="${options.baseUrl}/blank-image/${encodeURI(
+    jwtImg
+  )}" />`;
   if (new RegExp(/<\/body>/).test(html)) {
     html = html.replace(/<\/body>/, `${imgTag}</body>`);
   } else {
