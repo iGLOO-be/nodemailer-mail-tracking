@@ -30,6 +30,17 @@ describe('path-html', () => {
         `"<html><head></head><body><h1>Hello</h1><p>paraph</p><img src=\\"http://some-path/blank-image/%5B%7B%22recipient%22:%22bar%22%7D,%22qsdsd%22,%7B%22expiresIn%22:%221y%22%7D%5D\\" /></body>"`
       );
     });
+    it('with imageAlt option', () => {
+      expect(
+        addBlankImage(
+          { ...options, imageAlt: 'some-alt' },
+          `<html><head></head><body><h1>Hello</h1><p>paraph</p></body>`,
+          data
+        )
+      ).toMatchInlineSnapshot(
+        `"<html><head></head><body><h1>Hello</h1><p>paraph</p><img src=\\"http://some-path/blank-image/%5B%7B%22recipient%22:%22bar%22%7D,%22qsdsd%22,%7B%22expiresIn%22:%221y%22%7D%5D\\" alt=\\"some-alt\\" /></body>"`
+      );
+    });
   });
 
   describe('patchLinks', () => {

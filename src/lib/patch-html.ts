@@ -3,14 +3,14 @@ import { sign, JwtOptions } from './jwt';
 import { JwtData, JwtDataForLink, MailTrackOptions } from '../types';
 
 export const addBlankImage = (
-  options: Pick<MailTrackOptions, 'baseUrl'> & JwtOptions,
+  options: Pick<MailTrackOptions, 'baseUrl' | 'imageAlt'> & JwtOptions,
   html: string,
   data: JwtData
 ) => {
   const jwtImg = sign(options, data);
   const imgTag = `<img src="${options.baseUrl}/blank-image/${encodeURI(
     jwtImg
-  )}" />`;
+  )}"${options.imageAlt ? ` alt="${options.imageAlt}"` : ''} />`;
   if (new RegExp(/<\/body>/).test(html)) {
     html = html.replace(/<\/body>/, `${imgTag}</body>`);
   } else {
