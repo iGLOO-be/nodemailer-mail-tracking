@@ -38,6 +38,7 @@ export type SendMailOptionsPatched = Omit<
 interface MailTrackOptionsBase {
   baseUrl: string; // ex: https://some-domain.com/api/mailtrack
   jwtSecret: string;
+  imageAlt?: string;
 }
 
 export interface MailTrackOptionsSendMail extends MailTrackOptionsBase {
